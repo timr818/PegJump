@@ -4,4 +4,10 @@
     <string name="name_spaced">Peg Jump!</string>
     <string name="settings">Settings</string>
     <string name="settings_label">Settings</string>
+    <string name="pause_menu_label">Game Paused</string>
+    <string name="resume_button_label">Resume!</string>
+    <string name="main_menu_button_label">Exit!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -6,4 +6,191 @@
     android:layout_height="match_parent"
     tools:context="hk.ust.cse.comp4521.pegjump.PlayGame">
 
+    <ImageView
+        android:id="@+id/boardBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pauseButton"
+        app:srcCompat="@drawable/game_board" />
+
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="14dp"
+        android:background="@android:drawable/ic_media_pause"
+        android:backgroundTint="@android:color/black"
+        android:text="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/peg0"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginStart="24dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/boardBackground"
+        app:layout_constraintStart_toStartOf="@+id/boardBackground" />
+
+    <Button
+        android:id="@+id/peg1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/peg0"
+        app:layout_constraintStart_toEndOf="@+id/peg0" />
+
+    <Button
+        android:id="@+id/peg2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/peg1"
+        app:layout_constraintStart_toEndOf="@+id/peg1" />
+
+    <Button
+        android:id="@+id/peg3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/peg2"
+        app:layout_constraintStart_toEndOf="@+id/peg2" />
+
+    <Button
+        android:id="@+id/peg4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/peg2"
+        app:layout_constraintStart_toEndOf="@+id/peg3" />
+
+    <Button
+        android:id="@+id/peg5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg0"
+        app:layout_constraintStart_toStartOf="@+id/peg0" />
+
+    <Button
+        android:id="@+id/peg6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg0"
+        app:layout_constraintStart_toEndOf="@+id/peg5" />
+
+    <Button
+        android:id="@+id/peg7"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg0"
+        app:layout_constraintStart_toEndOf="@+id/peg6" />
+
+    <Button
+        android:id="@+id/peg8"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg0"
+        app:layout_constraintStart_toEndOf="@+id/peg7" />
+
+    <Button
+        android:id="@+id/peg9"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg5"
+        app:layout_constraintStart_toStartOf="@+id/peg5" />
+
+    <Button
+        android:id="@+id/peg10"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg5"
+        app:layout_constraintStart_toEndOf="@+id/peg9" />
+
+    <Button
+        android:id="@+id/peg11"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg5"
+        app:layout_constraintStart_toEndOf="@+id/peg10" />
+
+    <Button
+        android:id="@+id/peg12"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg9"
+        app:layout_constraintStart_toStartOf="@+id/peg9" />
+
+    <Button
+        android:id="@+id/peg13"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg9"
+        app:layout_constraintStart_toEndOf="@+id/peg12" />
+
+    <Button
+        android:id="@+id/peg14"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:text="@null"
+        app:layout_constraintBottom_toTopOf="@+id/peg12"
+        app:layout_constraintStart_toStartOf="@+id/peg12" />
 </android.support.constraint.ConstraintLayout>
