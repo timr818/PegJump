@@ -19,4 +19,6 @@ public class Constants {
     public static final int MIN_PEGS = 9;
     public static final int MAX_PEGS = 14;
 
+    public static final int WINNING_NUMBER = 5;
+
 }

@@ -1,6 +1,8 @@
 package hk.ust.cse.comp4521.pegjump;
 
 import android.util.Pair;
+import android.view.Gravity;
+import android.widget.PopupWindow;
 
 import java.util.Random;
 import java.util.Vector;
@@ -46,8 +48,6 @@ public class GameController {
 
         Vector<Peg> vacantPegs = gameBoard.getVacantPegs();
 
-        System.out.println(vacantPegs.size() + " vacnat pegs");
-
         if (vacantPegs.size() < Constants.MAX_PEGS) {
             int numOccupiedPegs = 15 - vacantPegs.size();
             int most = Constants.MAX_PEGS - numOccupiedPegs;
@@ -78,5 +78,9 @@ public class GameController {
 
     public int getPegPoints() {
         return pegPoints;
+    }
+
+    public void gameWon() {
+
     }
 }

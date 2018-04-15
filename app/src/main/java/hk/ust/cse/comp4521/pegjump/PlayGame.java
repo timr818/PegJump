@@ -34,6 +34,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     ImageButton minusButton;
 
     PopupWindow pauseWindow;
+    PopupWindow winWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,29 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
         Button exitButton = pauseView.findViewById(R.id.exitToMenuButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+        View winView = getLayoutInflater().inflate(R.layout.fragment_winning_screen, null);
+        winWindow = new PopupWindow(winView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        //winWindow.setFocusable(true);
+        winWindow.setBackgroundDrawable(new ColorDrawable());
+
+        Button restartButton = winView.findViewById(R.id.restartButton);
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+                winWindow.dismiss();
+            }
+        });
+
+        Button exitButton2 = winView.findViewById(R.id.exitButton);
+        exitButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -212,6 +236,11 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
                 pegLabel.setVisibility(View.INVISIBLE);
             }
         }
+
+        if (controller.getPegPoints() == Constants.WINNING_NUMBER) {
+            showWinScreen();
+            controller.gameWon();
+        }
     }
 
     private ImageButton getPegView(int id) {
@@ -256,12 +285,21 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         return findViewById(100 + id);
     }
 
+    public void showWinScreen() {
+        winWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
+    }
+
     private void pauseGame() {
         pauseWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
 
     private void resumeGame() {
         pauseWindow.dismiss();
+    }
+
+    private void restartGame() {
+        controller = new GameController();
+        updateBoardVisuals();
     }
 
 }
