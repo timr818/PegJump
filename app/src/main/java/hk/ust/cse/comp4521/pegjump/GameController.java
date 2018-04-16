@@ -45,7 +45,6 @@ public class GameController {
     private void moveMade() {
         //when a move has been made, there's a chance that some vacant slots will be populated
         //with a random peg
-
         Vector<Peg> vacantPegs = gameBoard.getVacantPegs();
 
         if (vacantPegs.size() < Constants.MAX_PEGS) {
@@ -58,6 +57,11 @@ public class GameController {
 
             Random rand = new Random();
             int numberToAdd = rand.nextInt(most) + min;
+
+            if (noMovesLeft() && numberToAdd == 0) {
+                numberToAdd++;
+            }
+
             for (int i = 0; i < numberToAdd; i++) {
                 vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1)).revive();
             }
@@ -78,6 +82,16 @@ public class GameController {
 
     public int getPegPoints() {
         return pegPoints;
+    }
+
+    public boolean noMovesLeft() {
+        for (Peg p : gameBoard.pegs) {
+            if (gameBoard.canMove(p)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void gameWon() {

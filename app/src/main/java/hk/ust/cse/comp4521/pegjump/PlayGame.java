@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class PlayGame extends AppCompatActivity implements View.OnClickListener {
@@ -30,8 +31,8 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     TextView[] valueLabels = new TextView[15];
 
     Button pauseButton;
-    ImageButton plusButton;
-    ImageButton minusButton;
+    RadioButton plusButton;
+    RadioButton minusButton;
 
     PopupWindow pauseWindow;
     PopupWindow winWindow;
@@ -115,8 +116,6 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onClick(View view) {
                 controller.operation = Constants.OPERATION_PLUS;
-                plusButton.setColorFilter(Constants.COLOR_SELECTED);
-                minusButton.setColorFilter(Constants.COLOR_VACANT);
             }
         });
 
@@ -125,8 +124,6 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onClick(View view) {
                 controller.operation = Constants.OPERATION_MINUS;
-                minusButton.setColorFilter(Constants.COLOR_SELECTED);
-                plusButton.setColorFilter(Constants.COLOR_VACANT);
             }
         });
 
@@ -138,6 +135,8 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             //instantiate the label for the value of the peg.
             TextView text = new TextView(this);
             text.setId(100 + i);
+            text.setTextColor(Constants.COLOR_VALUE_LABEL_TEXT);
+            text.setShadowLayer(6, 0, 0, Constants.COLOR_VALUE_LABEL_SHADOW);
             text.setText(Integer.toString(controller.getPegValue(i)));
             ConstraintLayout.LayoutParams textLayoutParams = new ConstraintLayout.LayoutParams(
                     ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
@@ -149,7 +148,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             constraintSet.clone(layout);
             constraintSet.connect(text.getId(), ConstraintSet.TOP, current.getId(), ConstraintSet.TOP, 0);
             constraintSet.connect(text.getId(), ConstraintSet.LEFT, current.getId(), ConstraintSet.LEFT, 0);
-            constraintSet.connect(text.getId(), ConstraintSet.BOTTOM, current.getId(), ConstraintSet.BOTTOM, 0);
+            constraintSet.connect(text.getId(), ConstraintSet.BOTTOM, current.getId(), ConstraintSet.BOTTOM, 62);
             constraintSet.connect(text.getId(), ConstraintSet.RIGHT, current.getId(), ConstraintSet.RIGHT, 0);
             constraintSet.applyTo(layout);
         }
@@ -213,9 +212,6 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     private void updateBoardVisuals() {
         pegPointsDisplay.setText(Integer.toString(controller.getPegPoints()));
 
-        ImageButton a = findViewById(R.id.peg0);
-        a.setColorFilter(Constants.COLOR_OCCUPIED);
-
         for (int i = 0; i < 15; i++) {
             ImageButton pegView = getPegView(i);
             TextView pegLabel = getPegLabel(i);
@@ -224,15 +220,19 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             pegLabel.setText(Integer.toString(controller.getPegValue(i)));
             if (i == controller.gameBoard.selectedPeg) {
                 pegView.setColorFilter(Constants.COLOR_SELECTED);
+                pegView.setImageResource(getProperPegImage(currentPeg.value));
                 pegLabel.setVisibility(View.VISIBLE);
             } else if (status == PegStatus.occupied) {
-                pegView.setColorFilter(Constants.COLOR_OCCUPIED);
+                pegView.setColorFilter(Constants.COLOR_NOT_SELECTED);
+                pegView.setImageResource(getProperPegImage(currentPeg.value));
                 pegLabel.setVisibility(View.VISIBLE);
             } else if (status == PegStatus.available) {
-                pegView.setColorFilter(Constants.COLOR_AVAILABLE);
+                pegView.setColorFilter(Constants.COLOR_NOT_SELECTED);
+                pegView.setImageResource(R.drawable.available_peg);
                 pegLabel.setVisibility(View.INVISIBLE);
             } else {
-                pegView.setColorFilter(Constants.COLOR_VACANT);
+                pegView.setColorFilter(Constants.COLOR_NOT_SELECTED);
+                pegView.setImageResource(R.drawable.vacant_peg);
                 pegLabel.setVisibility(View.INVISIBLE);
             }
         }
@@ -300,6 +300,16 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     private void restartGame() {
         controller = new GameController();
         updateBoardVisuals();
+    }
+
+    private int getProperPegImage(int value) {
+        if (value < Constants.PEG_YELLOW_THRESHOLD) {
+            return R.drawable.occupied_blue_peg;
+        } else if (value < Constants.PEG_RED_THRESHOLD) {
+            return R.drawable.occupied_yellow_peg;
+        } else {
+            return R.drawable.occupied_red_peg;
+        }
     }
 
 }

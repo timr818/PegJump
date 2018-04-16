@@ -7,13 +7,76 @@
     android:layout_height="match_parent"
     tools:context="hk.ust.cse.comp4521.pegjump.PlayGame">
 
+    <TextView
+        android:id="@+id/numMovesDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:text="@null"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pegPointsDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boardBackground" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/boardBackground">
+
+        <RadioButton
+            android:id="@+id/plusButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/operator_add_background"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="@+id/boardBackground"
+            app:layout_constraintTop_toTopOf="@+id/boardBackground" />
+
+        <RadioButton
+            android:id="@+id/minusButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/operator_diff_background"
+            android:button="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toEndOf="@+id/plusButton"
+            app:layout_constraintTop_toTopOf="@+id/plusButton" />
+
+    </RadioGroup>
+
     <ImageView
         android:id="@+id/boardBackground"
         android:layout_width="430dp"
         android:layout_height="400dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="false"
         android:contentDescription="@string/app_name"
@@ -30,7 +93,6 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
         android:layout_marginTop="14dp"
         android:background="@android:drawable/ic_media_pause"
         android:backgroundTint="@android:color/black"
@@ -42,66 +104,67 @@
         android:id="@+id/peg0"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="69dp"
+        android:layout_marginBottom="83dp"
         android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toBottomOf="@+id/boardBackground"
         app:layout_constraintStart_toStartOf="@+id/boardBackground"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg1"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toBottomOf="@+id/peg0"
         app:layout_constraintStart_toEndOf="@+id/peg0"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toBottomOf="@+id/peg1"
         app:layout_constraintStart_toEndOf="@+id/peg1"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toBottomOf="@+id/peg2"
         app:layout_constraintStart_toEndOf="@+id/peg2"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg4"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toBottomOf="@+id/peg2"
         app:layout_constraintStart_toEndOf="@+id/peg3"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg5"
@@ -109,54 +172,55 @@
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg0"
         app:layout_constraintStart_toStartOf="@+id/peg0"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg6"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg0"
         app:layout_constraintStart_toEndOf="@+id/peg5"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg7"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg0"
         app:layout_constraintStart_toEndOf="@+id/peg6"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg8"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg0"
         app:layout_constraintStart_toEndOf="@+id/peg7"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg9"
@@ -164,40 +228,41 @@
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg5"
         app:layout_constraintStart_toStartOf="@+id/peg5"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg10"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg5"
         app:layout_constraintStart_toEndOf="@+id/peg9"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg11"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg5"
         app:layout_constraintStart_toEndOf="@+id/peg10"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg12"
@@ -205,26 +270,27 @@
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg9"
         app:layout_constraintStart_toStartOf="@+id/peg9"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg13"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg9"
         app:layout_constraintStart_toEndOf="@+id/peg12"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
+        app:srcCompat="@drawable/vacant_peg" />
 
     <ImageButton
         android:id="@+id/peg14"
@@ -232,51 +298,12 @@
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:text="@null"
         app:layout_constraintBottom_toTopOf="@+id/peg12"
         app:layout_constraintStart_toStartOf="@+id/peg12"
-        app:srcCompat="@android:drawable/radiobutton_off_background" />
-
-    <ImageButton
-        android:id="@+id/plusButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:text="@string/operation_plus"
-        app:layout_constraintStart_toStartOf="@+id/boardBackground"
-        app:layout_constraintTop_toTopOf="@+id/boardBackground"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
-
-    <ImageButton
-        android:id="@+id/minusButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="8dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:text="@string/operation_minus"
-        app:layout_constraintStart_toEndOf="@+id/plusButton"
-        app:layout_constraintTop_toTopOf="@+id/plusButton"
-        app:srcCompat="@android:drawable/checkbox_off_background" />
-
-    <TextView
-        android:id="@+id/pegPointsDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boardBackground" />
+        app:srcCompat="@drawable/vacant_peg" />
 
 </android.support.constraint.ConstraintLayout>

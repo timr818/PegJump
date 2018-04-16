@@ -108,6 +108,17 @@ public class GameBoard {
         return result;
     }
 
+    public boolean canMove(Peg p) {
+        for (Pair<Integer, Integer> jumps : p.possibleMoves) {
+            if (pegs.elementAt(jumps.first).currentStatus == PegStatus.occupied &&
+                    pegs.elementAt(jumps.second).currentStatus != PegStatus.occupied) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public Vector<Peg> getVacantPegs() {
         Vector<Peg> result = new Vector<>();
         for (int i = 0; i < pegs.size(); i++) {
