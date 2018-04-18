@@ -4,45 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/whitepaint"
     tools:context="hk.ust.cse.comp4521.pegjump.MainMenu">
 
-    <TextView
-        android:id="@+id/gameTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/corkBoardImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/name_spaced"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/corkboard" />
 
-    <Button
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="225dp"
+        android:layout_height="225dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="46dp"
+        app:layout_constraintEnd_toEndOf="@+id/corkBoardImage"
+        app:layout_constraintStart_toStartOf="@+id/corkBoardImage"
+        app:layout_constraintTop_toTopOf="@+id/corkBoardImage"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageButton
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/play_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameTitle" />
-
-    <Button
-        android:id="@+id/muteButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/sound"
-        android:backgroundTint="@android:color/black"
-        android:text="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/corkBoardImage"
+        app:layout_constraintStart_toStartOf="@+id/corkBoardImage"
+        app:layout_constraintTop_toBottomOf="@+id/logoImage"
+        app:srcCompat="@drawable/playbutton" />
 
 </android.support.constraint.ConstraintLayout>

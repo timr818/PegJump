@@ -1,5 +1,7 @@
 package hk.ust.cse.comp4521.pegjump;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Pair;
 import android.view.Gravity;
 import android.widget.PopupWindow;
@@ -12,16 +14,16 @@ public class GameController {
 
     GameBoard gameBoard;
 
-    private int pegPoints;
+    public int pegPoints;
+    public int numMoves;
 
     public int operation;
-
-    private static boolean soundMuted = false;
 
     GameController() {
         gameBoard = new GameBoard();
         operation = Constants.OPERATION_PLUS;
         pegPoints = 0;
+        numMoves = 0;
     }
 
     public void pegPressed(int id) {
@@ -47,41 +49,34 @@ public class GameController {
         //with a random peg
         Vector<Peg> vacantPegs = gameBoard.getVacantPegs();
 
+        numMoves++;
+
         if (vacantPegs.size() < Constants.MAX_PEGS) {
-            int numOccupiedPegs = 15 - vacantPegs.size();
-            int most = Constants.MAX_PEGS - numOccupiedPegs;
-            int min = 0;
-            if (numOccupiedPegs < Constants.MIN_PEGS) {
-                min = 1;
-            }
+            addRandomPegs(vacantPegs);
 
-            Random rand = new Random();
-            int numberToAdd = rand.nextInt(most) + min;
-
-            if (noMovesLeft() && numberToAdd == 0) {
-                numberToAdd++;
-            }
-
-            for (int i = 0; i < numberToAdd; i++) {
-                vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1)).revive();
+            while(noMovesLeft()) {
+                addRandomPegs(vacantPegs);
             }
         }
     }
 
-    public int getPegValue(int id) {
-        return gameBoard.pegs.elementAt(id).value;
-    }
+    private void addRandomPegs(Vector<Peg> vacantPegs) {
+        int numOccupiedPegs = 15 - vacantPegs.size();
+        int most = Constants.MAX_PEGS - numOccupiedPegs;
+        int min = 0;
+        if (numOccupiedPegs < Constants.MIN_PEGS) {
+            min = 1;
+        }
 
-    public void toggleMute() {
-        soundMuted = !soundMuted;
-    }
+        Random rand = new Random();
+        int numberToAdd = rand.nextInt(most) + min;
+        if (rand.nextFloat() < 0.3) {
+            numberToAdd = min;
+        }
 
-    public boolean isSoundMuted() {
-        return soundMuted;
-    }
-
-    public int getPegPoints() {
-        return pegPoints;
+        for (int i = 0; i < numberToAdd; i++) {
+            vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1)).revive();
+        }
     }
 
     public boolean noMovesLeft() {
@@ -94,7 +89,15 @@ public class GameController {
         return true;
     }
 
-    public void gameWon() {
+    public void gameWon(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
 
+        int prevBestScore = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
+        if (prevBestScore < 0 || numMoves < prevBestScore) {
+            SharedPreferences.Editor edit = prefs.edit();
+
+            edit.putInt(Constants.PREFS_BEST_SCORE, numMoves);
+            edit.commit();
+        }
     }
 }

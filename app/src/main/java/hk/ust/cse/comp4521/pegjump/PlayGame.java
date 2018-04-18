@@ -1,6 +1,8 @@
 package hk.ust.cse.comp4521.pegjump;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -26,6 +28,8 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     ConstraintLayout layout;
 
     TextView pegPointsDisplay;
+    TextView numMovesDisplay;
+    TextView bestScoreDisplay;
 
     ImageButton[] pegButtons = new ImageButton[15];
     TextView[] valueLabels = new TextView[15];
@@ -46,11 +50,26 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
         controller = new GameController();
 
-        pegPointsDisplay = findViewById(R.id.pegPointsDisplay);
-
+        configureTextDisplays();
         configurePopups();
         configureButtons();
         updateBoardVisuals();
+    }
+
+    private void configureTextDisplays() {
+        pegPointsDisplay = findViewById(R.id.pegPointsDisplay);
+        numMovesDisplay = findViewById(R.id.numMovesDisplay);
+        bestScoreDisplay = findViewById(R.id.bestScoreDisplay);
+
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+        int prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
+        System.out.println("Prev Best: " + prevBest);
+        if (prevBest >= 0) {
+            String message = getResources().getString(R.string.prev_best_label, prevBest);
+            bestScoreDisplay.setText(message);
+        } else {
+            bestScoreDisplay.setText(getResources().getString(R.string.prev_best_missing_label));
+        }
     }
 
     private void configurePopups() {
@@ -137,7 +156,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             text.setId(100 + i);
             text.setTextColor(Constants.COLOR_VALUE_LABEL_TEXT);
             text.setShadowLayer(6, 0, 0, Constants.COLOR_VALUE_LABEL_SHADOW);
-            text.setText(Integer.toString(controller.getPegValue(i)));
+            text.setText(getResources().getString(R.string.peg_label));
             ConstraintLayout.LayoutParams textLayoutParams = new ConstraintLayout.LayoutParams(
                     ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
             layout.addView(text, textLayoutParams);
@@ -210,14 +229,15 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void updateBoardVisuals() {
-        pegPointsDisplay.setText(Integer.toString(controller.getPegPoints()));
+        pegPointsDisplay.setText(getResources().getString(R.string.peg_points_label, controller.pegPoints));
+        numMovesDisplay.setText(getResources().getString(R.string.num_moves_label, controller.numMoves));
 
         for (int i = 0; i < 15; i++) {
             ImageButton pegView = getPegView(i);
             TextView pegLabel = getPegLabel(i);
             Peg currentPeg = controller.gameBoard.pegs.elementAt(i);
             PegStatus status = currentPeg.currentStatus;
-            pegLabel.setText(Integer.toString(controller.getPegValue(i)));
+            pegLabel.setText(getResources().getString(R.string.peg_label,  currentPeg.value));
             if (i == controller.gameBoard.selectedPeg) {
                 pegView.setColorFilter(Constants.COLOR_SELECTED);
                 pegView.setImageResource(getProperPegImage(currentPeg.value));
@@ -237,9 +257,9 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             }
         }
 
-        if (controller.getPegPoints() == Constants.WINNING_NUMBER) {
+        if (controller.pegPoints == Constants.WINNING_NUMBER) {
             showWinScreen();
-            controller.gameWon();
+            controller.gameWon(this.getApplicationContext());
         }
     }
 
@@ -299,6 +319,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
     private void restartGame() {
         controller = new GameController();
+        configureTextDisplays();
         updateBoardVisuals();
     }
 
