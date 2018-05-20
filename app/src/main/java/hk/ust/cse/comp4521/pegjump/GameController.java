@@ -69,13 +69,29 @@ public class GameController {
         }
 
         Random rand = new Random();
-        int numberToAdd = rand.nextInt(most) + min;
+        int numberToAdd = rand.nextInt(most - min) + min;
         if (rand.nextFloat() < 0.3) {
             numberToAdd = min;
         }
 
+        int minValue = -1;
+        int maxValue = -1;
+        for (int i = 0; i < 15; i++) {
+            int v = gameBoard.pegs.elementAt(i).value;
+
+            if (v < minValue || minValue == -1) {
+                minValue = v;
+            }
+
+            if (v > maxValue || maxValue == -1) {
+                maxValue = v;
+            }
+        }
+
         for (int i = 0; i < numberToAdd; i++) {
-            vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1)).revive();
+            Peg thePeg = vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1));
+            thePeg.currentStatus = PegStatus.occupied;
+            thePeg.value = rand.nextInt(maxValue - minValue) + minValue;
         }
     }
 

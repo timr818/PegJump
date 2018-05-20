@@ -20,7 +20,7 @@ public class Constants {
     public static final int MIN_PEGS = 9;
     public static final int MAX_PEGS = 14;
 
-    public static final int WINNING_NUMBER = 100;
+    public static final int WINNING_NUMBER = 734;
 
     public static final int PEG_YELLOW_THRESHOLD = 10;
     public static final int PEG_RED_THRESHOLD = 25;

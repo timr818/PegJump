@@ -21,6 +21,11 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 public class PlayGame extends AppCompatActivity implements View.OnClickListener {
 
     GameController controller;
@@ -41,10 +46,20 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     PopupWindow pauseWindow;
     PopupWindow winWindow;
 
+    GoogleSignInClient mGoogleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
+
+        //GOOGLE AUTHENTICATION
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         layout = findViewById(R.id.playGameLayout);
 
@@ -54,6 +69,34 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         configurePopups();
         configureButtons();
         updateBoardVisuals();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //updateUI(account);  //BE SURE TO UPDATE UI TO SHOW THAT THEY ARE EITHER LOGGED IN OR NOT TODO
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying()) {
+            BackgroundMusicService.mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (BackgroundMusicService.mediaPlayer != null && !BackgroundMusicService.mediaPlayer.isPlaying()) {
+            BackgroundMusicService.mediaPlayer.start();
+        }
+
+        //REMEMBER TO CHECK IF THE GOOGLE PLAY API IS UP TO DATE https://developers.google.com/android/guides/setup TODO
     }
 
     private void configureTextDisplays() {

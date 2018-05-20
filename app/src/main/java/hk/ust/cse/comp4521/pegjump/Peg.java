@@ -102,9 +102,4 @@ public class Peg {
             value = Math.abs(value - rhs);
         }
     }
-
-    public void revive() {
-        currentStatus = PegStatus.occupied;
-        value = generateInitialValue();
-    }
 }

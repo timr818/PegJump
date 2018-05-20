@@ -29,7 +29,7 @@
         android:layout_height="225dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="@+id/corkBoardImage"
         app:layout_constraintStart_toStartOf="@+id/corkBoardImage"
         app:layout_constraintTop_toTopOf="@+id/corkBoardImage"
@@ -47,5 +47,53 @@
         app:layout_constraintStart_toStartOf="@+id/corkBoardImage"
         app:layout_constraintTop_toBottomOf="@+id/logoImage"
         app:srcCompat="@drawable/playbutton" />
+
+    <ImageButton
+        android:id="@+id/soundMuteButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:rotation="10"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/corkBoardImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playButton"
+        app:srcCompat="@drawable/sound" />
+
+    <ImageButton
+        android:id="@+id/musicMuteButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/soundMuteButton"
+        app:layout_constraintEnd_toStartOf="@+id/soundMuteButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/soundMuteButton"
+        app:srcCompat="@drawable/music" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:rotation="-5"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/soundMuteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/soundMuteButton"
+        app:layout_constraintTop_toTopOf="@+id/soundMuteButton"
+        app:srcCompat="@drawable/settings" />
 
 </android.support.constraint.ConstraintLayout>

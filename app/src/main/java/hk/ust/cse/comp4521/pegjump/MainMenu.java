@@ -1,42 +1,41 @@
 package hk.ust.cse.comp4521.pegjump;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
+import android.content.ServiceConnection;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainMenu extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
+    protected ServiceConnection mServerConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            //Log.d(LOG_TAG, "onServiceConnected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //Log.d(LOG_TAG, "onServiceDisconnected");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bensound_summer);
-
         configureButtons();
 
-        //MUSIC
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
-        boolean muteMusic = prefs.getBoolean(Constants.PREFS_MUSIC_MUTE, Constants.DEFAULT_MUSIC_MUTE);
-        if (!muteMusic) {
-            mediaPlayer.start();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mediaPlayer.stop();
-        mediaPlayer.release();
+        Intent music = new Intent(MainMenu.this, BackgroundMusicService.class);
+        startService(music);
     }
 
     private void configureButtons() {
@@ -48,4 +47,31 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (BackgroundMusicService.mediaPlayer != null && !BackgroundMusicService.mediaPlayer.isPlaying())
+            BackgroundMusicService.mediaPlayer.start();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying())
+            BackgroundMusicService.mediaPlayer.pause();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Intent music = new Intent(MainMenu.this, BackgroundMusicService.class);
+        stopService(music);
+    }
+
 }
