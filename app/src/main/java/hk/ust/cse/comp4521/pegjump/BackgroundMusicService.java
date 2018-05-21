@@ -23,7 +23,7 @@ public class BackgroundMusicService extends Service {
         mediaPlayer = MediaPlayer.create(this, R.raw.bensoundsummer);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
-        
+
         return START_STICKY;
     }
 
@@ -40,16 +40,6 @@ public class BackgroundMusicService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
 
-        Log.e("HERE", "BINDDIEDED");
-        mediaPlayer.start();
-
         return null;
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        Log.e("HERE", "UNBINDED");
-        mediaPlayer.pause();
-        return super.onUnbind(intent);
     }
 }

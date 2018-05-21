@@ -29,6 +29,5 @@ public class Constants {
     public static final String PREFS_BEST_SCORE = "peg_best_score";
     public static final String PREFS_MUSIC_MUTE = "peg_music_mute";
 
-    public static final boolean DEFAULT_MUSIC_MUTE = true;
-
+    public static final boolean PREFS_DEFAULT_MUSIC_MUTE = false;
 }

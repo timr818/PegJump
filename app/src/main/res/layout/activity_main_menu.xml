@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logoImage"
         app:srcCompat="@drawable/playbutton" />
 
-    <ImageButton
+    <ToggleButton
         android:id="@+id/soundMuteButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -56,7 +56,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@null"
+        android:background="@drawable/sound_mute_toggle"
+        android:textOn=""
+        android:textOff=""
         android:rotation="10"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/corkBoardImage"
@@ -65,20 +67,24 @@
         app:layout_constraintTop_toBottomOf="@+id/playButton"
         app:srcCompat="@drawable/sound" />
 
-    <ImageButton
+    <ToggleButton
         android:id="@+id/musicMuteButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:background="@null"
+        android:background="@drawable/music_mute_toggle"
+        android:textOn=""
+        android:textOff=""
         android:scaleType="fitCenter"
+        android:rotation="1"
         app:layout_constraintBottom_toBottomOf="@+id/soundMuteButton"
         app:layout_constraintEnd_toStartOf="@+id/soundMuteButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/soundMuteButton"
-        app:srcCompat="@drawable/music" />
+        app:layout_constraintTop_toTopOf="@+id/soundMuteButton" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -86,6 +92,8 @@
         android:layout_height="70dp"
         android:layout_marginEnd="28dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@null"
         android:rotation="-5"

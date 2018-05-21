@@ -106,7 +106,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
         SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
         int prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
-        System.out.println("Prev Best: " + prevBest);
+
         if (prevBest >= 0) {
             String message = getResources().getString(R.string.prev_best_label, prevBest);
             bestScoreDisplay.setText(message);
