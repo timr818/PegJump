@@ -22,7 +22,8 @@ public class BackgroundMusicService extends Service {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.bensoundsummer);
         mediaPlayer.setLooping(true);
-        mediaPlayer.start();
+        if (!GlobalSpace.musicMute)
+            mediaPlayer.start();
 
         return START_STICKY;
     }

@@ -25,11 +25,15 @@ public class MainMenu extends AppCompatActivity {
 
         configureButtons();
 
+        Intent music = new Intent(MainMenu.this, BackgroundMusicService.class);
+        startService(music);
+
         SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
         GlobalSpace.musicMute = prefs.getBoolean(Constants.PREFS_MUSIC_MUTE, Constants.PREFS_DEFAULT_MUSIC_MUTE);
         if (!GlobalSpace.musicMute) {
-            Intent music = new Intent(MainMenu.this, BackgroundMusicService.class);
-            startService(music);
+            if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying()) {
+                BackgroundMusicService.mediaPlayer.pause();
+            }
         }
     }
 
@@ -46,7 +50,7 @@ public class MainMenu extends AppCompatActivity {
         muteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //bla
+
             }
         });
     }
