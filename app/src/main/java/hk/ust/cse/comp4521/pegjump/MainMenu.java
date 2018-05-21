@@ -46,11 +46,7 @@ public class MainMenu extends AppCompatActivity {
         muteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying()) {
-                    BackgroundMusicService.mediaPlayer.pause();
-                }
+                //bla
             }
         });
     }
