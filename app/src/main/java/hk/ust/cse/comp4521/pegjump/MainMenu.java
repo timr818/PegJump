@@ -3,6 +3,7 @@ package hk.ust.cse.comp4521.pegjump;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class MainMenu extends AppCompatActivity {
@@ -88,19 +90,37 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        //final Context thisContext = this;
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this/*thisContext*/, gso);
 
         Button loginButton = findViewById(R.id.loginButton);
-        final Context thisContext = this;
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build();
-                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(thisContext, gso);
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, 0);
 
+            }
+        });
+
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGoogleSignInClient.signOut();
+                Log.e("Logout Success", "User has logged out");
+
+                /*
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            //@Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // ...
+                            }
+                        });
+                */
             }
         });
     }
@@ -121,9 +141,8 @@ public class MainMenu extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            //Log.e("GOT IN2", "GOT INSIDE FUNCTION TO HANDLE SIGNIN RESULT!");
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class); //FAILS HERE!
-            //Log.e("Success", "GUCCI GANG!"/*account.getId()*/);
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.e("Login Success", account.getId());
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
