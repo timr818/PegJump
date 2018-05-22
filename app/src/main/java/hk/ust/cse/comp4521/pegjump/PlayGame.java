@@ -31,6 +31,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     TextView numMovesDisplay;
     TextView bestScoreDisplay;
     TextView winningScoreDisplay;
+    TextView globalWinningScoreDisplay;
 
     ImageButton[] pegButtons = new ImageButton[15];
     TextView[] valueLabels = new TextView[15];
@@ -182,6 +183,9 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         winningScoreDisplay = winView.findViewById(R.id.winningMovesLabel);
         winWindow = new PopupWindow(winView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         winWindow.setBackgroundDrawable(new ColorDrawable());
+
+        //View globalWinView = getLayoutInflater().inflate(R.layout.fragment_winning_screen, null);
+        globalWinningScoreDisplay = winView.findViewById(R.id.globalHighScore);
 
         Button restartButton = winView.findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
@@ -387,8 +391,11 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
     public void showWinScreen() {
 
-        if (winningScoreDisplay != null)
+        if (winningScoreDisplay != null) {
             winningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
+            globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
+
+        }
         winWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
 

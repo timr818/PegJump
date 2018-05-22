@@ -85,4 +85,30 @@
         app:layout_constraintEnd_toEndOf="@+id/winningMovesLabel"
         app:layout_constraintStart_toStartOf="@+id/winningMovesLabel"
         app:layout_constraintTop_toBottomOf="@+id/winningMovesLabel" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="100dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:text="Current Global High Score"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/globalHighScore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/globalHighScore"
+        android:layout_width="54dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="70dp"
+        android:text="0"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 </android.support.constraint.ConstraintLayout>
