@@ -59,13 +59,13 @@
         android:background="@drawable/sound_mute_toggle"
         android:textOn=""
         android:textOff=""
+        android:checked="true"
         android:rotation="10"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/corkBoardImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playButton"
-        app:srcCompat="@drawable/sound" />
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
     <ToggleButton
         android:id="@+id/musicMuteButton"
@@ -79,6 +79,7 @@
         android:background="@drawable/music_mute_toggle"
         android:textOn=""
         android:textOff=""
+        android:checked="true"
         android:scaleType="fitCenter"
         android:rotation="1"
         app:layout_constraintBottom_toBottomOf="@+id/soundMuteButton"

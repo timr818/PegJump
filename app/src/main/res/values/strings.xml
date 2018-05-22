@@ -21,4 +21,6 @@
     <string name="peg_label">%d</string>
     <string name="win_screen_begginning_sentence">You won in</string>
     <string name="win_screen_end_sentence">moves!</string>
+    <string name="pause_music_mute_label">Music: </string>
+    <string name="pause_sfx_label">Sfx: </string>
 </resources>

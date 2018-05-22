@@ -1,11 +1,8 @@
 package hk.ust.cse.comp4521.pegjump;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +11,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import static hk.ust.cse.comp4521.pegjump.BackgroundMusicService.mediaPlayer;
 
 public class PlayGame extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +30,7 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     TextView pegPointsDisplay;
     TextView numMovesDisplay;
     TextView bestScoreDisplay;
+    TextView winningScoreDisplay;
 
     ImageButton[] pegButtons = new ImageButton[15];
     TextView[] valueLabels = new TextView[15];
@@ -46,24 +42,15 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     PopupWindow pauseWindow;
     PopupWindow winWindow;
 
-    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
 
-        //GOOGLE AUTHENTICATION
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         layout = findViewById(R.id.playGameLayout);
 
-        controller = new GameController();
+        controller = new GameController(this);
 
         configureTextDisplays();
         configurePopups();
@@ -74,17 +61,14 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        //updateUI(account);  //BE SURE TO UPDATE UI TO SHOW THAT THEY ARE EITHER LOGGED IN OR NOT TODO
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying()) {
-            BackgroundMusicService.mediaPlayer.pause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
         }
     }
 
@@ -92,8 +76,8 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     protected void onResume() {
         super.onResume();
 
-        if (BackgroundMusicService.mediaPlayer != null && !BackgroundMusicService.mediaPlayer.isPlaying()) {
-            BackgroundMusicService.mediaPlayer.start();
+        if (mediaPlayer != null && !mediaPlayer.isPlaying() && !GlobalSpace.musicMute) {
+            mediaPlayer.start();
         }
 
         //REMEMBER TO CHECK IF THE GOOGLE PLAY API IS UP TO DATE https://developers.google.com/android/guides/setup TODO
@@ -140,10 +124,63 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+        Button restartButton1 = pauseView.findViewById(R.id.restartButton);
+        restartButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartGame();
+                pauseWindow.dismiss();
+            }
+        });
+
+        Switch musicMuteSwitch = pauseView.findViewById(R.id.pauseMusicMuteSwitch);
+        if (GlobalSpace.musicMute) {
+            musicMuteSwitch.setChecked(false);
+        } else {
+            musicMuteSwitch.setChecked(true);
+        }
+        musicMuteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GlobalSpace.musicMute = !isChecked;
+
+                if (!GlobalSpace.musicMute) {
+                    if (BackgroundMusicService.mediaPlayer != null && !BackgroundMusicService.mediaPlayer.isPlaying()) {
+                        BackgroundMusicService.mediaPlayer.start();
+                    }
+                } else {
+                    if (BackgroundMusicService.mediaPlayer != null && BackgroundMusicService.mediaPlayer.isPlaying()) {
+                        BackgroundMusicService.mediaPlayer.pause();
+                    }
+                }
+
+                SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Constants.PREFS_MUSIC_MUTE, GlobalSpace.musicMute);
+                edit.apply();
+            }
+        });
+
+        Switch sfxSwitch = pauseView.findViewById(R.id.pauseSfxMuteSwitch);
+        if (GlobalSpace.sfxMute) {
+            sfxSwitch.setChecked(false);
+        } else {
+            sfxSwitch.setChecked(true);
+        }
+        sfxSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                GlobalSpace.sfxMute = !isChecked;
+
+                SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Constants.PREFS_SFX_MUTE, GlobalSpace.sfxMute);
+                edit.apply();
+            }
+        });
+
 
         View winView = getLayoutInflater().inflate(R.layout.fragment_winning_screen, null);
+        winningScoreDisplay = winView.findViewById(R.id.winningMovesLabel);
         winWindow = new PopupWindow(winView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        //winWindow.setFocusable(true);
         winWindow.setBackgroundDrawable(new ColorDrawable());
 
         Button restartButton = winView.findViewById(R.id.restartButton);
@@ -349,6 +386,9 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void showWinScreen() {
+
+        if (winningScoreDisplay != null)
+            winningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
         winWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
 
@@ -361,8 +401,11 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void restartGame() {
-        controller = new GameController();
+        controller = new GameController(this);
         configureTextDisplays();
+        plusButton.callOnClick();
+        plusButton.setChecked(true);
+        minusButton.setChecked(false);
         updateBoardVisuals();
     }
 

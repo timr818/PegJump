@@ -7,5 +7,6 @@ package hk.ust.cse.comp4521.pegjump;
 public class GlobalSpace {
 
     public static boolean musicMute = false;
+    public static boolean sfxMute = false;
 
 }

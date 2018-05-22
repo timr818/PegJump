@@ -92,7 +92,7 @@ public class Peg {
 
     private int generateInitialValue() {
         Random rand = new Random();
-        return rand.nextInt(10);
+        return rand.nextInt(9) + 1;
     }
 
     public void applyOperation(int op, int rhs) {

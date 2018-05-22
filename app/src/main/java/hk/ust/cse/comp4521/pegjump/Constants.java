@@ -28,6 +28,8 @@ public class Constants {
     public static final String PREFS_FILE = "peg_app_prefs";
     public static final String PREFS_BEST_SCORE = "peg_best_score";
     public static final String PREFS_MUSIC_MUTE = "peg_music_mute";
+    public static final String PREFS_SFX_MUTE = "sfx_mute";
 
     public static final boolean PREFS_DEFAULT_MUSIC_MUTE = false;
+    public static final boolean PREFS_DEFAULT_SFX_MUTE = false;
 }

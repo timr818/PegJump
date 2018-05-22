@@ -109,6 +109,10 @@ public class GameBoard {
     }
 
     public boolean canMove(Peg p) {
+        if (p.currentStatus != PegStatus.occupied) {
+            return false;
+        }
+
         for (Pair<Integer, Integer> jumps : p.possibleMoves) {
             if (pegs.elementAt(jumps.first).currentStatus == PegStatus.occupied &&
                     pegs.elementAt(jumps.second).currentStatus != PegStatus.occupied) {

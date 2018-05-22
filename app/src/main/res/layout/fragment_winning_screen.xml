@@ -17,7 +17,9 @@
         android:layout_weight="1"
         android:text="@string/winning_message"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,21 +48,25 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="42dp"
         android:text="@string/win_screen_begginning_sentence"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/winLabel"
         app:layout_constraintStart_toStartOf="@+id/winLabel"
         app:layout_constraintTop_toBottomOf="@+id/winLabel" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/winningMovesLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/peg_label"
+        android:textColor="@android:color/black"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +77,12 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/win_screen_end_sentence"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:layout_editor_absoluteX="191dp" />
+        app:layout_constraintEnd_toEndOf="@+id/winningMovesLabel"
+        app:layout_constraintStart_toStartOf="@+id/winningMovesLabel"
+        app:layout_constraintTop_toBottomOf="@+id/winningMovesLabel" />
 </android.support.constraint.ConstraintLayout>

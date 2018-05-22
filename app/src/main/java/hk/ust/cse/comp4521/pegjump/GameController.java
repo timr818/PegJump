@@ -2,6 +2,7 @@ package hk.ust.cse.comp4521.pegjump;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.util.Pair;
 import android.view.Gravity;
 import android.widget.PopupWindow;
@@ -12,18 +13,27 @@ import java.util.Vector;
 
 public class GameController {
 
+    Context mContext;
     GameBoard gameBoard;
+
+    MediaPlayer moveSoundEffectPlayer;
 
     public int pegPoints;
     public int numMoves;
 
     public int operation;
 
-    GameController() {
+    GameController(Context context) {
         gameBoard = new GameBoard();
         operation = Constants.OPERATION_PLUS;
         pegPoints = 0;
         numMoves = 0;
+        mContext = context;
+        initializeAudio();
+    }
+
+    private void initializeAudio() {
+        moveSoundEffectPlayer = MediaPlayer.create(mContext, R.raw.pegstab);
     }
 
     public void pegPressed(int id) {
@@ -45,6 +55,10 @@ public class GameController {
 
 
     private void moveMade() {
+        if (!moveSoundEffectPlayer.isPlaying() && !GlobalSpace.sfxMute) {
+            moveSoundEffectPlayer.start();
+        }
+
         //when a move has been made, there's a chance that some vacant slots will be populated
         //with a random peg
         Vector<Peg> vacantPegs = gameBoard.getVacantPegs();
@@ -91,7 +105,7 @@ public class GameController {
         for (int i = 0; i < numberToAdd; i++) {
             Peg thePeg = vacantPegs.elementAt(rand.nextInt(vacantPegs.size() - 1));
             thePeg.currentStatus = PegStatus.occupied;
-            thePeg.value = rand.nextInt(maxValue - minValue) + minValue;
+            thePeg.value = rand.nextInt(9) + 1;
         }
     }
 
@@ -113,7 +127,7 @@ public class GameController {
             SharedPreferences.Editor edit = prefs.edit();
 
             edit.putInt(Constants.PREFS_BEST_SCORE, numMoves);
-            edit.commit();
+            edit.apply();
         }
     }
 }
