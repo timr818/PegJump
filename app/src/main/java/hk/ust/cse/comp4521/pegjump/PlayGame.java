@@ -1,3 +1,6 @@
+//COMP 4521     Name: Alfonso Miguel Pascual Santos-Tankia      Student ID: 20531732          Email: amsaa@connect.ust.hk
+//COMP 4521     Name: Timothy Jacob Regan                       Student ID: 20531756          Email: tjregan@connect.ust.hk
+
 package hk.ust.cse.comp4521.pegjump;
 
 import android.content.Context;
@@ -52,9 +55,8 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     PopupWindow pauseWindow;
     PopupWindow winWindow;
 
-    //String leaderboard_id = "CgkI7JyliJANEAIQAA";     //NOT USED ANYMORE BECAUSE DOESN'T WORK!
-    SharedPreferences prefs;// = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
-    int prevBest;// = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
+    SharedPreferences prefs;
+    int prevBest;
 
 
     @Override
@@ -104,10 +106,6 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         pegPointsDisplay = findViewById(R.id.pegPointsDisplay);
         numMovesDisplay = findViewById(R.id.numMovesDisplay);
         bestScoreDisplay = findViewById(R.id.bestScoreDisplay);
-
-
-        //SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
-        //int prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
 
         if (prevBest >= 0) {
             String message = getResources().getString(R.string.prev_best_label, prevBest);
@@ -201,7 +199,6 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         winWindow = new PopupWindow(winView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         winWindow.setBackgroundDrawable(new ColorDrawable());
 
-        //View globalWinView = getLayoutInflater().inflate(R.layout.fragment_winning_screen, null);
         globalWinningScoreDisplay = winView.findViewById(R.id.globalHighScore);
 
         Button restartButton = winView.findViewById(R.id.restartButton);
@@ -412,69 +409,10 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
             winningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
             globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, prevBest));
 
-            //do try catch, if high score is not visible, set global high score to winningScoreDisplay high score
-            //else output the global high score
-
-            /*      =======     DOESN'T WORK    =======
-            //NEED TO GET HIGHEST SCORE FROM GLOBAL HIGH SCORE
-            final Context thisContext = this;
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        Log.e("Signing In", "Signing into current logged account");
-                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                //.requestScopes(Games.SCOPE_GAMES_LITE)
-                                .requestEmail()
-                                .build();
-                        //GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(thisContext, gso);
-
-                        Log.e("Signing In v2", "Signing into current logged account v2 " + GoogleSignIn.getLastSignedInAccount(thisContext));
-                        Games.getLeaderboardsClient(thisContext, GoogleSignIn.getLastSignedInAccount(thisContext))
-                                .submitScore(leaderboard_id, Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
-                        //HAVING TROUBLE SUBMITTING THE SCORE
-                        Log.e("Signing In v3", "Signing into current logged account v3  " + Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
-                        //showLeaderboard();
-                        //output globalHighScore here
-                    }
-                    catch(Exception e) {
-                        Log.e("FAIL", "FAILURE ON GETTING LEADERBOARD CLIENT!   " + e);
-                    }
-                }
-            }, 2000);
-
-            Log.e("Out of the loop", "OUT OF LOOP!");
-            try{
-                Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                        .submitScore(leaderboard_id, Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
-                //globalWinningScoreDisplay.setText("Click on");
-                showLeaderboard();
-                //.submitScore(getString(R.string.leaderboard_id), 1337);
-                //output globalHighScore here
-                //globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
-            }
-            catch(Exception e) {
-                Log.e("FAIL", "FAILURE ON GETTING LEADERBOARD CLIENT!");
-                //globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
-            }
-                    ==========      DOESN'T WORK    ===========*/
         }
         winWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
-    /*      ========    DOESN'T WORK    ========
-    private void showLeaderboard() {
-        Log.e("Leaderboard", "Showing Leaderboard");
-        Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .getLeaderboardIntent(leaderboard_id)
-                .addOnSuccessListener(new OnSuccessListener<Intent>() {
-                    @Override
-                    public void onSuccess(Intent intent) {
-                        startActivityForResult(intent, 9004);
-                    }
-                });
-    }
-            ========       DOESN'T WORK     =======*/
+
     private void pauseGame() {
         pauseWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }

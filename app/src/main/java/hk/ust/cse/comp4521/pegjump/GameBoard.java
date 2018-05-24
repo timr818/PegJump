@@ -1,3 +1,6 @@
+//COMP 4521     Name: Alfonso Miguel Pascual Santos-Tankia      Student ID: 20531732          Email: amsaa@connect.ust.hk
+//COMP 4521     Name: Timothy Jacob Regan                       Student ID: 20531756          Email: tjregan@connect.ust.hk
+
 package hk.ust.cse.comp4521.pegjump;
 
 import android.util.Pair;
