@@ -17,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -92,10 +93,10 @@ public class MainMenu extends AppCompatActivity {
 
         //final Context thisContext = this;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                //.requestScopes(Games.SCOPE_GAMES_LITE)
                 .requestEmail()
                 .build();
         final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this/*thisContext*/, gso);
-
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +144,9 @@ public class MainMenu extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Log.e("Login Success", account.getId());
+            //TEST
+            Log.e("SignIn MAINMENU", "Account: " + GoogleSignIn.getLastSignedInAccount(this));
+            //TEST
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

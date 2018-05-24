@@ -1,8 +1,10 @@
 package hk.ust.cse.comp4521.pegjump;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,13 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.LeaderboardsClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import static hk.ust.cse.comp4521.pegjump.BackgroundMusicService.mediaPlayer;
 
@@ -43,11 +52,18 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
     PopupWindow pauseWindow;
     PopupWindow winWindow;
 
+    //String leaderboard_id = "CgkI7JyliJANEAIQAA";     //NOT USED ANYMORE BECAUSE DOESN'T WORK!
+    SharedPreferences prefs;// = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+    int prevBest;// = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
+
+        prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+        prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
 
         layout = findViewById(R.id.playGameLayout);
 
@@ -89,8 +105,9 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
         numMovesDisplay = findViewById(R.id.numMovesDisplay);
         bestScoreDisplay = findViewById(R.id.bestScoreDisplay);
 
-        SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
-        int prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
+
+        //SharedPreferences prefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE);
+        //int prevBest = prefs.getInt(Constants.PREFS_BEST_SCORE, -1);
 
         if (prevBest >= 0) {
             String message = getResources().getString(R.string.prev_best_label, prevBest);
@@ -393,12 +410,71 @@ public class PlayGame extends AppCompatActivity implements View.OnClickListener 
 
         if (winningScoreDisplay != null) {
             winningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
-            globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
+            globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, prevBest));
 
+            //do try catch, if high score is not visible, set global high score to winningScoreDisplay high score
+            //else output the global high score
+
+            /*      =======     DOESN'T WORK    =======
+            //NEED TO GET HIGHEST SCORE FROM GLOBAL HIGH SCORE
+            final Context thisContext = this;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        Log.e("Signing In", "Signing into current logged account");
+                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                //.requestScopes(Games.SCOPE_GAMES_LITE)
+                                .requestEmail()
+                                .build();
+                        //GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(thisContext, gso);
+
+                        Log.e("Signing In v2", "Signing into current logged account v2 " + GoogleSignIn.getLastSignedInAccount(thisContext));
+                        Games.getLeaderboardsClient(thisContext, GoogleSignIn.getLastSignedInAccount(thisContext))
+                                .submitScore(leaderboard_id, Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
+                        //HAVING TROUBLE SUBMITTING THE SCORE
+                        Log.e("Signing In v3", "Signing into current logged account v3  " + Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
+                        //showLeaderboard();
+                        //output globalHighScore here
+                    }
+                    catch(Exception e) {
+                        Log.e("FAIL", "FAILURE ON GETTING LEADERBOARD CLIENT!   " + e);
+                    }
+                }
+            }, 2000);
+
+            Log.e("Out of the loop", "OUT OF LOOP!");
+            try{
+                Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                        .submitScore(leaderboard_id, Long.parseLong(getResources().getString(R.string.peg_label, controller.numMoves)));
+                //globalWinningScoreDisplay.setText("Click on");
+                showLeaderboard();
+                //.submitScore(getString(R.string.leaderboard_id), 1337);
+                //output globalHighScore here
+                //globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
+            }
+            catch(Exception e) {
+                Log.e("FAIL", "FAILURE ON GETTING LEADERBOARD CLIENT!");
+                //globalWinningScoreDisplay.setText(getResources().getString(R.string.peg_label, controller.numMoves));
+            }
+                    ==========      DOESN'T WORK    ===========*/
         }
         winWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
-
+    /*      ========    DOESN'T WORK    ========
+    private void showLeaderboard() {
+        Log.e("Leaderboard", "Showing Leaderboard");
+        Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .getLeaderboardIntent(leaderboard_id)
+                .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, 9004);
+                    }
+                });
+    }
+            ========       DOESN'T WORK     =======*/
     private void pauseGame() {
         pauseWindow.showAtLocation(pauseButton, Gravity.CENTER, 0, 0);
     }
